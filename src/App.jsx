@@ -14,12 +14,25 @@ export default function App() {
         {id: crypto.randomUUID(), title: newItem, completed: false},
       ]
   })
+  setNewItem("")
+  }
+
+
+  function toggleTodo(id, completed){
+    setTodos(currentTodos => {
+      return currentTodos.map(todo => {
+        if (todo.id === id){
+          return {...todos, completed }
+        }
+        return todo
+      })
+    })
   }
 
 
   return (
     <>
-    <form onSubmit={handleSubmit}className="new-item-form">
+    <form onSubmit={handleSubmit} className="new-item-form">
       <div className="form-row">
         <label htmlFor="item">New Item</label>
         <input value={newItem} onChange={e => setNewItem(e.target.value)} type="text" id="item" />
@@ -31,7 +44,7 @@ export default function App() {
       {todos.map(todo => {
         return <li key={todo.id}>
         <label>
-          <input type="checkbox" checked={todo.completed} />
+          <input type="checkbox" checked={todo.completed} onChange={e => toggleTodo(todo.id, e.target.checked)} />
           {todo.title}
         </label>
         <button className="deleteBtn">Delete</button>
