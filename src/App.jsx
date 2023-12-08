@@ -8,7 +8,12 @@ export default function App() {
   function handleSubmit(e){
     e.preventDefault()
 
-    setTodos() //!Finished working here
+    setTodos(currentTodos => {
+      return [
+        ...currentTodos,
+        {id: crypto.randomUUID(), title: newItem, completed: false},
+      ]
+  })
   }
 
 
@@ -23,20 +28,16 @@ export default function App() {
     </form>
     <h1 className="header">Todo List</h1>
     <ul className="list">
-      <li>
+      {todos.map(todo => {
+        return <li key={todo.id}>
         <label>
-          <input type="checkbox" />
-          Item 1
+          <input type="checkbox" checked={todo.completed} />
+          {todo.title}
         </label>
         <button className="deleteBtn">Delete</button>
       </li>
-      <li>
-        <label>
-          <input type="checkbox" />
-          Item 2
-        </label>
-        <button className="deleteBtn">Delete</button>
-      </li>
+      } )}
+      
     </ul>
     </>
   )
