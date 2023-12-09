@@ -22,10 +22,17 @@ export default function App() {
     setTodos(currentTodos => {
       return currentTodos.map(todo => {
         if (todo.id === id){
-          return {...todos, completed }
+          return {...todo, completed }
         }
         return todo
       })
+    })
+  }
+
+
+  function deleteTodo(id){
+    setTodos(currentTodos => {
+      return currentTodos.filter(todo => todo.id !== id)
     })
   }
 
@@ -41,13 +48,14 @@ export default function App() {
     </form>
     <h1 className="header">Todo List</h1>
     <ul className="list">
+      {todos.length === 0 && "All tasks completed"}
       {todos.map(todo => {
         return <li key={todo.id}>
         <label>
           <input type="checkbox" checked={todo.completed} onChange={e => toggleTodo(todo.id, e.target.checked)} />
           {todo.title}
         </label>
-        <button className="deleteBtn">Delete</button>
+        <button onClick={() => deleteTodo(todo.id)} className="deleteBtn">Delete</button>
       </li>
       } )}
       
